@@ -94,7 +94,7 @@ class AuthController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'phone' => 'phone'
+                'phone' => 'phone:' . setting('countryCode', "GH") . '|required'
             ],
             $messages = [
                 'phone.exists' => __('Phone not associated with any account'),
