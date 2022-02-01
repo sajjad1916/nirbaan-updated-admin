@@ -24,7 +24,8 @@ class AuthController extends Controller
     
     public function verifyPhoneAccount(Request $request)
      {
-        $phone = $request->phone;
+
+        $phone = PhoneNumber::make($request->phone)->ofCountry('BD');
         $user = User::where('phone', 'like', '%' . $phone . '')->first();
 
         if (!empty($user)) {
@@ -62,22 +63,21 @@ class AuthController extends Controller
         }
 
         //
-        $user = User::where('phone', $request->phone)->first(); 
+        $phone = PhoneNumber::make($request->phone)->ofCountry('BD');
+
+        $user = User::where('phone', $phone)->first(); 
 
         if (!empty($request->role) && !$user->hasAnyRole($request->role)) {
             return response()->json([
                 "message" => __("Unauthorized Access. Please try with an authorized credentials")
             ], 401);
-        } else if (!$user->is_active) {
-            return response()->json([
-                "message" => __("Account is not active. Please contact us")
-            ], 401);
+        
         } else if ($request->role == "manager" && empty($user->vendor_id)) {
             return response()->json([
                 "message" => __("Manager is not assigned to a vendor. Please assign manager to vendor and try again")
             ], 401);
-        } else if (Auth::attempt(['phone' => $request->phone, 'password' => $request->password])) {
-
+        } else if (Auth::attempt(['phone' => $phone, 'password' => $request->password])) 
+        {
             //generate tokens
             return $this->authObject($user);
         } else {
@@ -109,9 +109,9 @@ class AuthController extends Controller
         }
 
         //
-        $phone = PhoneNumber::make($request->phone);
-        $user = User::where('phone', 'like', '%' . $phone . '')->first();
-
+        $phone = PhoneNumber::make($request->phone)->ofCountry('BD');
+        $user = User::where('phone', 'like', '%' . $phone . '%')->first();
+        
         if (empty($user)) {
             return response()->json([
                 "message" => __("There is no account accoutiated with provided phone number ") . $phone . "",
@@ -122,7 +122,7 @@ class AuthController extends Controller
         try {
 
             //
-            $phone = PhoneNumber::make($request->phone);
+            $phone = PhoneNumber::make($request->phone)->ofCountry('BD');
 
             if (!empty($request->firebase_id_token)) {
                 $firebaseUser = $this->verifyFirebaseIDToken($request->firebase_id_token);
@@ -191,7 +191,8 @@ class AuthController extends Controller
         try {
 
             //
-            $phone = PhoneNumber::make($request->phone);
+            $phone = PhoneNumber::make($request->phone)->ofCountry('BD');
+            $acnumber = PhoneNumber::make($request->acnumber)->ofCountry('BD');
             // $rawPhone = PhoneNumber::make($request->phone, setting('countryCode', "GH"))->formatNational();
             // $phone = str_replace(' ', '', $rawPhone); 
             // logger("Phone", [$request->phone, $phone]);
@@ -215,7 +216,7 @@ class AuthController extends Controller
             $user->userAddress = $request->userAddress;
             $user->pickupHub = $request->pickupHub ?? "";
             $user->actype = $request->actype;
-            $user->acnumber = $request->acnumber;
+            $user->acnumber = $acnumber;
             $user->is_active = true;
             $user->save();
 
@@ -278,6 +279,8 @@ class AuthController extends Controller
             ], 400);
         }
 
+        $phone = PhoneNumber::make($request->phone)->ofCountry('BD');
+        $acnumber = PhoneNumber::make($request->acnumber)->ofCountry('BD');
 
         try {
 
@@ -287,11 +290,11 @@ class AuthController extends Controller
             $user = User::find(Auth::id());
             $user->name = $request->name ?? $user->name;
             $user->email = $request->email ?? $user->email ?? NULL;
-            $user->phone = $request->phone ?? $user->phone;
+            $user->phone = $phone ?? $user->phone;
             $user->userAddress = $request->userAddress ?? $user->userAddress;
             $user->pickupHub = $request->pickupHub ?? $user->pickupHub;
             $user->actype = $request->actype ?? $user->actype;
-            $user->acnumber = $request->acnumber ?? $user->acnumber;
+            $user->acnumber = $acnumber ?? $user->acnumber;
             $user->country_code = $request->country_code ?? $user->country_code;
             $user->is_online = $request->is_online ?? $user->is_online;
             $user->save();
