@@ -10,7 +10,7 @@ class BaseTableComponent extends TableComponent
 {
 
     public $canManage = true;
-    public $checkDemo = false;
+  
 
     protected $listeners = [
         'activateModel',

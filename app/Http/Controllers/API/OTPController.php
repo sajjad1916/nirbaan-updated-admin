@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Services\OTPService;
 use Illuminate\Http\Request;
 use App\Models\Otp;
-
+use Propaganistas\LaravelPhone\PhoneNumber;
 
 
 
@@ -20,11 +20,11 @@ class OTPController extends Controller
 
         //is_login
         //phone
-
+        $phone = PhoneNumber::make($request->phone)->ofCountry('BD');
         //verifiy that the number exists 
         if (!empty($request->is_login)) {
             //
-            $user = User::where('phone', $request->phone)->first();
+            $user = User::where('phone', $phone)->first();
             if (empty($user)) {
                 return response()->json([
                     "message" => __('Phone number not associated with any account'),
@@ -37,7 +37,7 @@ class OTPController extends Controller
         $code = rand(111111, 999999);
         //create or update otp record
         $otp = Otp::updateOrCreate(
-            ["phone" => $request->phone],
+            ["phone" => $phone],
             ["code" => $code]
         );
 
@@ -63,11 +63,11 @@ class OTPController extends Controller
         //is_login
         //phone
         //code 
-
+        $phone = PhoneNumber::make($request->phone)->ofCountry('BD');
         //
         $otp = Otp::where(
             [
-                "phone" => $request->phone,
+                "phone" => $phone,
                 "code" => $request->code,
             ]
         )->first();
@@ -89,7 +89,7 @@ class OTPController extends Controller
             ], 200);
         }else{
             //
-            $user = User::where('phone', $request->phone)->first();
+            $user = User::where('phone', $phone)->first();
             $authController = new AuthController();
             return $authController->authObject($user);
         }

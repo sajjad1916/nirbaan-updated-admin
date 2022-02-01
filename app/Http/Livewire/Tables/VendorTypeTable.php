@@ -10,7 +10,7 @@ class VendorTypeTable extends BaseTableComponent
 {
 
     public $model = VendorType::class;
-    public $checkDemo = true;
+    
     public $header_view = 'components.buttons.new';
    
 

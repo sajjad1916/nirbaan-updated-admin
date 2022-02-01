@@ -56,26 +56,6 @@ class SMSGatewayLivewire extends BaseLivewireComponent
             $this->accountId = setting("sms_gateways.twilio.accountId");
             $this->token = setting("sms_gateways.twilio.token");
             $this->fromNumber = setting("sms_gateways.twilio.fromNumber");
-        } else if ($this->selectedModel->slug == "msg91") {
-            $this->authkey = setting("sms_gateways.msg91.authkey");
-            $this->sender = setting("sms_gateways.msg91.sender");
-            $this->route = setting("sms_gateways.msg91.route");
-        } else if ($this->selectedModel->slug == "gatewayapi") {
-            $this->authkey = setting("sms_gateways.gatewayapi.authkey");
-            $this->sender = setting("sms_gateways.gatewayapi.sender");
-            $this->authSecret = setting("sms_gateways.gatewayapi.authSecret");
-            $this->token = setting("sms_gateways.gatewayapi.token");
-        } else if ($this->selectedModel->slug == "termii") {
-            $this->authkey = setting("sms_gateways.termii.authkey");
-            $this->sender = setting("sms_gateways.termii.sender");
-        } else if ($this->selectedModel->slug == "africastalking") {
-            $this->authkey = setting("sms_gateways.africastalking.authkey");
-            $this->token = setting("sms_gateways.africastalking.token");
-            $this->sender = setting("sms_gateways.africastalking.sender");
-        } else if ($this->selectedModel->slug == "hubtel") {
-            $this->authkey = setting("sms_gateways.hubtel.authkey");
-            $this->token = setting("sms_gateways.hubtel.token");
-            $this->sender = setting("sms_gateways.hubtel.sender");
         }
         $this->emit('showEditModal');
     }
@@ -101,42 +81,7 @@ class SMSGatewayLivewire extends BaseLivewireComponent
                     'sms_gateways.twilio.token' =>  $this->token,
                     'sms_gateways.twilio.fromNumber' =>  $this->fromNumber,
                 ])->save();
-            } else if ($this->selectedModel->slug == "msg91") {
-                setting([
-                    'sms_gateways.msg91.authkey' =>  $this->authkey,
-                    'sms_gateways.msg91.sender' =>  $this->sender,
-                    'sms_gateways.msg91.route' =>  $this->route,
-                ])->save();
-            } else if ($this->selectedModel->slug == "gatewayapi") {
-                //
-                setting([
-                    'sms_gateways.gatewayapi.authkey' =>  $this->authkey,
-                    'sms_gateways.gatewayapi.sender' =>  $this->sender,
-                    'sms_gateways.gatewayapi.authSecret' =>  $this->authSecret,
-                    'sms_gateways.gatewayapi.token' =>  $this->token,
-                ])->save();
-            } else if ($this->selectedModel->slug == "termii") {
-                //
-                setting([
-                    'sms_gateways.termii.authkey' =>  $this->authkey,
-                    'sms_gateways.termii.sender' =>  $this->sender,
-                ])->save();
-            } else if ($this->selectedModel->slug == "africastalking") {
-                //
-                setting([
-                    'sms_gateways.africastalking.authkey' =>  $this->authkey,
-                    'sms_gateways.africastalking.sender' =>  $this->sender,
-                    'sms_gateways.africastalking.token' =>  $this->token,
-                ])->save();
-            } else if ($this->selectedModel->slug == "hubtel") {
-                //
-                setting([
-                    'sms_gateways.hubtel.authkey' =>  $this->authkey,
-                    'sms_gateways.hubtel.token' =>  $this->token,
-                    'sms_gateways.hubtel.sender' =>  $this->sender,
-                ])->save();
-            }
-
+            } 
             DB::commit();
 
             $this->dismissModal();
@@ -167,7 +112,7 @@ class SMSGatewayLivewire extends BaseLivewireComponent
             } catch (\Exception $ex) {
                 $this->showErrorAlert($ex->getMessage() ?? "SMS Failed to send");
             }
-            // } else if (in_array($this->selectedModel->slug, ["msg91", "gatewayapi", "termii", ])) {
+           
         } else {
 
             //send sms

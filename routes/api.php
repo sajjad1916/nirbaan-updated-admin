@@ -13,7 +13,6 @@ use App\Http\Controllers\API\ChatNotificationController;
 use App\Http\Controllers\API\RatingController;
 use App\Http\Controllers\API\WalletController;
 use App\Http\Controllers\API\OrderPaymentCallbackController;
-use App\Http\Controllers\API\OTPController;
 use App\Http\Controllers\API\ReviewController;
 
 
@@ -58,8 +57,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Auth
-Route::post('otp/send', [OTPController::class, 'sendOTP']);
-Route::post('otp/verify', [OTPController::class, 'verifyOTP']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 Route::get('logout', [AuthController::class, 'logout']);

@@ -10,7 +10,7 @@ class BaseDataTableComponent extends DataTableComponent
 {
 
     public array $perPageAccepted = [5, 10, 15, 20];
-    public $checkDemo = false;
+    
 
     protected $listeners = [
         'activateModel',

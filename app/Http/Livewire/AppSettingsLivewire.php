@@ -61,7 +61,7 @@ class AppSettingsLivewire extends BaseLivewireComponent
     public $maxDriverOrderAtOnce;
     public $maxDriverOrderNotificationAtOnce;
     public $clearRejectedAutoAssignment;
-    public $smsGateways = ['None','Firebase','Twilio','MSG91','gatewayapi','termii','africastalking','hubtel'];
+    public $smsGateways = ['None','Firebase','Twilio'];
 
 
     public function mount()
