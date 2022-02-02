@@ -34,27 +34,9 @@
                     @endforeach
                 </div>
 
-                @if( ($selectedPaymentMethod->slug ?? '') == "paypal" )
-                    <div id="paypal-button-container" class="py-12"></div>
-                @endif
             </div>
             <p class="w-full p-4 text-sm text-center text-gray-500">{{__('Do not close this window')}}</p>
         @else
             @include('livewire.payment.offline.wallet')
         @endif
-{{-- paytm --}}
-@include('livewire.payment.gateways.paytm')
-{{-- payU --}}
-@include('livewire.payment.gateways.payu')
-        {{-- close --}}
-    </div>
-    @push('scripts')
-        <script src="https://js.stripe.com/v3/"></script>
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-        <script src="https://checkout.flutterwave.com/v3.js"></script>
-        <script src="https://js.paystack.co/v1/inline.js"></script>
-        <script src="https://www.paypal.com/sdk/js?client-id={{ $paypalMethod->public_key ?? '' }}&currency={{ setting('currencyCode', 'USD') }}&intent=capture">
-        </script>
-        <script src="{{ asset('js/topup.js') }}"></script>
-        {{--  //custom payment  --}}
-    @endpush
+

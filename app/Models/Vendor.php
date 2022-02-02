@@ -209,10 +209,6 @@ class Vendor extends BaseModel
         return $this->belongsToMany('App\Models\Day')->withPivot('id', 'day_id', 'open', 'close');
     }
 
-    public function products()
-    {
-        return $this->hasMany('App\Models\Product', 'vendor_id', 'id');
-    }
 
 
 

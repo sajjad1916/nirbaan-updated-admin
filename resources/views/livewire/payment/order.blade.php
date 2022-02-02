@@ -6,9 +6,6 @@
             <p class="text-xl font-medium text-center">{{ __('Order Payment') }}</p>
             <p class="text-sm text-center">
                 {{ __('Please wait while we process your payment') }}</p>
-            @if( $selectedModel->payment_method->slug == "paypal" )
-                <div id="paypal-button-container" class="py-12"></div>
-            @endif
         </div>
 
         {{-- close --}}
@@ -19,28 +16,5 @@
 @else
     @include('livewire.payment.offline.order')
 @endif
-{{-- paytm --}}
-@include('livewire.payment.gateways.paytm')
-{{-- payU --}}
-@include('livewire.payment.gateways.payu')
 
-@push('scripts')
-    @if($selectedModel->payment_method->slug == 'stripe')
-        <script src="https://js.stripe.com/v3/"></script>
-    @elseif( $selectedModel->payment_method->slug == "razorpay" )
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    @elseif( $selectedModel->payment_method->slug == "flutterwave" )
-        <script src="https://checkout.flutterwave.com/v3.js"></script>
-    @elseif( $selectedModel->payment_method->slug == "paystack" )
-        <script src="https://js.paystack.co/v1/inline.js"></script>
-    @elseif( $selectedModel->payment_method->slug == "billplz" )
-        <script src="https://js.paystack.co/v1/inline.js"></script>
-    @elseif( $selectedModel->payment_method->slug == "paypal" )
-        <script
-            src="https://www.paypal.com/sdk/js?client-id={{ $selectedModel->payment_method->public_key }}&currency={{ setting('currencyCode', 'USD') }}&intent=capture">
-        </script>
-        {{-- //custom payment --}}
-    @endif
 
-    <script src="{{ asset('js/payment.js') }}"></script>
-@endpush

@@ -3,9 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
-use App\Models\State;
-use App\Models\Country;
 use App\Models\PackageTypePricing;
 use App\Models\Vendor;
 use Illuminate\Http\Request;

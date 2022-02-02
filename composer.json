@@ -29,7 +29,6 @@
         "php": "^7.3|^8.0",
         "ahsankhatri/firestore-php": "master",
         "aloha/twilio": "^5.0",
-        "anandsiddharth/laravel-paytm-wallet": "^2.0",
         "anlutro/l4-settings": "^1.0",
         "anthonymartin/geo-location": "^2.0",
         "asantibanez/livewire-charts": "^2.2",
@@ -104,9 +103,6 @@
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"

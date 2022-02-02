@@ -915,20 +915,6 @@ INSERT INTO `earnings` (`id`, `amount`, `user_id`, `vendor_id`, `created_at`, `u
 (1,	0.00,	NULL,	1,	'2021-11-01 17:14:12',	'2021-11-01 17:14:12',	NULL),
 (2,	0.00,	81,	NULL,	'2021-11-24 11:57:48',	'2021-11-24 11:57:48',	NULL);
 
-DROP TABLE IF EXISTS `extensions`;
-CREATE TABLE `extensions` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `action` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `component` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 DROP TABLE IF EXISTS `failed_jobs`;
 CREATE TABLE `failed_jobs` (
@@ -1028,7 +1014,6 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (46,	'2021_05_31_094223_create_state_vendor_pivot_table',	1),
 (47,	'2021_06_15_075025_create_payment_method_vendor_pivot_table',	1),
 (49,	'2021_06_19_061433_create_statuses_table',	1),
-(50,	'2021_07_04_144604_create_extensions_table',	1),
 (51,	'2021_07_19_003627_create_remittances_table',	1),
 (52,	'2021_08_07_124104_create_coupon_user_pivot_table',	1),
 (53,	'2021_08_18_133903_create_sms_gateways_table',	1),

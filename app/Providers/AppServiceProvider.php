@@ -41,25 +41,6 @@ class AppServiceProvider extends ServiceProvider
             return 0;
         });
 
-
-        if (!app()->runningInConsole()) {
-            //
-            try {
-                if (!Schema::hasTable('settings')) {
-                    $currentRoute = $this->app->request->getRequestUri();
-                    if (!str_contains($currentRoute, "/install")) {
-                        redirect("install")->send();
-                    }
-                }
-            } catch (\Exception $ex) {
-                //
-                $currentRoute = $this->app->request->getRequestUri();
-                if (!str_contains($currentRoute, "/install")) {
-                    redirect("install")->send();
-                }
-            }
-        }
-
         try {
             if (Schema::hasTable('settings')) {
                 date_default_timezone_set(setting('timeZone', 'UTC'));
