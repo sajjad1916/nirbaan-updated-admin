@@ -49,7 +49,7 @@ class PackageOrderController extends Controller
         }
 
        $sizeAmount += $packageTypePricing->base_price;
-        $totalAmount = $sizeAmount + $productPrice;
+        $totalAmount =$productPrice - $sizeAmount;
 
         return response()->json([
             "delivery_fee" => $sizeAmount,
