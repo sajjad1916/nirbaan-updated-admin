@@ -32,29 +32,47 @@
             </div>
             <div class="grid grid-cols-1 gap-4 mt-5 border-t md:grid-cols-2 lg:grid-cols-3">
                 <x-details.item
-                    title="{{ $selectedModel != null && $selectedModel->is_package ? __('Sender')  : __('User') }}"
+                    title="{{ $selectedModel != null && $selectedModel->is_package ? __('Sender')  : __('Merchant') }}"
                     text="{{ $selectedModel->user->name ?? '' }}" />
                 <x-details.item
-                    title="{{ $selectedModel != null && $selectedModel->is_package ? __('Sender Phone')  : __('User Phone') }}"
+                    title="{{ $selectedModel != null && $selectedModel->is_package ? __('Sender Phone')  : __('Merchant Phone') }}"
                     text="{{ $selectedModel->user->phone ?? '' }}" />
 
+                <x-details.item
+                    title="{{ $selectedModel != null && $selectedModel->is_package ? __('Sender Address')  : __('Merchant Address') }}"
+                    text="{{ $selectedModel->merchantAddress ?? '' }}" />
 
+                <x-details.item
+                    title="{{ $selectedModel != null && $selectedModel->is_package ? __('Pickup Hub')  : __('Pickup Hub') }}"
+                    text="{{ $selectedModel->user->pickupHub ?? '' }}" />
+
+                <x-details.item
+                    title="{{ $selectedModel != null && $selectedModel->is_package ? __('Pickup Hub')  : __('Payment Account Type') }}"
+                    text="{{ $selectedModel->user->actype ?? '' }}" />
+
+                <x-details.item
+                    title="{{ $selectedModel != null && $selectedModel->is_package ? __('Pickup Hub')  : __('Payment Account Number') }}"
+                    text="{{ $selectedModel->user->acnumber ?? '' }}" />
+                
             </div>
-           
             
+            @if($selectedModel != null && !$selectedModel->vendor->vendor_type->is_parcel )
+                <div class="mt-5 border-t">
+                    <x-details.item title="{{ __('Note') }}"
+                    text="{{ $selectedModel->note ?? '--' }}" />
+                </div>
+            @endif
             <div class="grid grid-cols-1 gap-4 mt-5 border-t md:grid-cols-2 lg:grid-cols-3">
 
-                <x-details.item title="{{ __('Vendor') }}"
-                    text="{{ $selectedModel->vendor->name ?? '' }}" />
-                <x-details.item title="{{ __('Vendor Address') }}"
-                    text="{{ $selectedModel->vendor->address ?? '' }}" />
+                <x-details.item title="{{ __('Customer') }}"
+                    text="{{ $selectedModel->customerName ?? '' }}" />
+                <x-details.item title="{{ __('Customer Phone') }}"
+                    text="{{ $selectedModel->customerPhone ?? '' }}" />
+                <x-details.item title="{{ __('Customer Address') }}"
+                    text="{{ $selectedModel->customerAddress ?? '' }}" />
+                <x-details.item title="{{ __('Delivery Hub') }}"
+                    text="{{ $selectedModel->deliveryHub ?? '' }}" />
 
-
-                <x-details.item title="{{ __('Date of order') }}"
-                    text="{{ $selectedModel != null ? $selectedModel->created_at->format('M d, Y \\a\\t H:i a') : '' }}" />
-                <x-details.item title="{{ __('Updated At') }}"
-                text="{{ $selectedModel != null ? $selectedModel->updated_at->format('M d, Y \\a\\t H:i a') : '' }}" />
-            </div>
 
             {{-- driver info --}}
             <div class="grid grid-cols-1 gap-4 pt-4 mt-4 border-t md:grid-cols-2 lg:grid-cols-3">
@@ -63,9 +81,38 @@
                 <x-details.item title="{{ __('Driver Phone') }}"
                     text="{{ $selectedModel->driver->phone ?? '--' }}" />
             </div>
+            
+            {{-- prefered time --}}
+            <div class="grid grid-cols-1 gap-4 pt-4 mt-4 border-t md:grid-cols-2 lg:grid-cols-3">
+                <x-details.item title="{{ __('Prefered Time') }}"
+                    text="{{ $selectedModel->preferedTime ?? '--' }}" />
+                <x-details.item title="{{ __('Prefered Date') }}"
+                    text="{{ $selectedModel->preferedDate ?? '--' }}" />
+            </div>
+
+           
+            
+          
+
+            <div class="grid grid-cols-1 gap-4 pt-4 mt-4 border-t md:grid-cols-2 lg:grid-cols-3">
+                <x-details.item title="{{ __('Product Class') }}"
+                    text="{{ $selectedModel->productClass ?? '--' }}" />
+                <x-details.item title="{{ __('Product Weight (KG)') }}"
+                    text="{{ $selectedModel->weight ?? '--' }}" />
+            </div>
 
             {{-- money --}}
             <div class="pt-4 border-t justify-items-end">
+
+             
+                <div class="flex items-center justify-end space-x-20 border-b">
+                    <x-label title="{{ __('Product Price') }}" />
+                    <div class="w-6/12 md:w-4/12 lg:w-2/12">
+                        <x-details.p
+                            text="{{ setting('currency', '$') }}{{ $selectedModel->productPrice ?? '' }}" /> 
+                    </div>
+                </div>
+                
                 <div class="flex items-center justify-end space-x-20 border-b">
                     <x-label title="{{ __('Delivery Fee') }}" />
                     <div class="w-6/12 md:w-4/12 lg:w-2/12">
@@ -73,7 +120,7 @@
                             text="+{{ setting('currency', '$') }}{{ $selectedModel->delivery_fee ?? '' }}" />
                     </div>
                 </div>
-               
+              
                 <div class="flex items-center justify-end space-x-20 border-b">
                     <x-label title="{{ __('Total') }}" />
                     <div class="w-6/12 md:w-4/12 lg:w-2/12">
