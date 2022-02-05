@@ -264,7 +264,7 @@ class NewOrderLivewire extends BaseLivewireComponent
 
         
         $order->delivery_fee = number_format($deliveryFee, 2, '.', '');
-        $order->total =$order->productPrice +$order->delivery_fee;
+        $order->total =$order->productPrice - $order->delivery_fee;
         return $order;
     }
 }
