@@ -75,7 +75,7 @@ class BaseLivewireComponent extends Component
         //     'toast'  =>  false,
         //     "timer" => $time,
         // ]);
-        dd($message);
+        // dd($message);
     }
 
     public function showWarningAlert($message = "", $time = 3000)
@@ -86,7 +86,7 @@ class BaseLivewireComponent extends Component
         //     'toast'  =>  false,
         //     "timer" => $time,
         // ]);
-        dd($message);
+        // dd($message);
     }
 
     public function showErrorAlert($message = "", $time = 3000)
@@ -97,7 +97,7 @@ class BaseLivewireComponent extends Component
         //     'toast'  =>  false,
         //     "timer" => $time,
         // ]);
-        dd($message);
+        // dd($message);
     }
 
     public function showSelect2($selectorID, $data, $onChange, $options = null)
