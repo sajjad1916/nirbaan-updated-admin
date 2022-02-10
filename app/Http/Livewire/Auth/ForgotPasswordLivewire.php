@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Auth;
 use App\Http\Livewire\BaseLivewireComponent;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Propaganistas\LaravelPhone\PhoneNumber;
+
 
 class ForgotPasswordLivewire extends BaseLivewireComponent
 {
@@ -32,13 +34,16 @@ class ForgotPasswordLivewire extends BaseLivewireComponent
 
         $this->validate(
             [
-                "phone" => "phone:AUTO,US|exists:users"
+                'phone' => 'phone:' . setting('countryCode', "GH") . '|required'
             ],
             [
                 "phone.exists" => __("No account associated with phone")
             ]
         );
-        $this->emit('sendOTP', $this->phone);
+
+        $phone = PhoneNumber::make($this->phone,'BD')->formatE164();
+        
+        $this->emit('sendOTP', $phone);
 
     }
 
@@ -64,10 +69,10 @@ class ForgotPasswordLivewire extends BaseLivewireComponent
             "password" => 'required|min:6',
             "password_confirmation" => 'required|same:password|min:6',
         ]);
-
+        $phone = PhoneNumber::make($this->phone,'BD')->formatE164();
         //
         if( !empty($this->idToken) ){
-            $user = User::where('phone', $this->phone)->first();
+            $user = User::where('phone', $phone)->first();
             $user->password = Hash::make($this->password);
             $user->Save();
 

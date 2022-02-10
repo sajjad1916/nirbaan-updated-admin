@@ -26,6 +26,7 @@ class AuthController extends Controller
      {
 
         $phone = PhoneNumber::make($request->phone)->ofCountry('BD');
+        
         $user = User::where('phone', 'like', '%' . $phone . '')->first();
 
         if (!empty($user)) {

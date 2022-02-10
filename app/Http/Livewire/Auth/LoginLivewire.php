@@ -28,11 +28,7 @@ class LoginLivewire extends BaseLivewireComponent
             [
                 "email.exists" => __("Email not associated with any account")
             ]
-        );
-
-     
-        
-        
+        );    
         //
         $user = User::where('email', $this->email)->first();
         
